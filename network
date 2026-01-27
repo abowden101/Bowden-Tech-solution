@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bowden Core Networks - MSP IT Solutions in Orlando, FL</title>
+<meta name="description" content="Innovative MSP IT services for networks, cloud, and security. Helping small to mid-tier businesses in healthcare, real estate, tailoring, and financial services thrive without an internal IT team.">
+<link rel="stylesheet" href="styles.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<header>
+<nav class="navbar">
+<div class="nav-container">
+<h1 class="logo"><i class="fas fa-network-wired"></i> Bowden Core Networks</h1>
+<ul class="nav-menu">
+<li><a href="#home">Home</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#industries">Industries</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+<div class="hamburger">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+</nav>
+</header>
+
+<section id="home" class="hero">
+<div class="hero-content">
+<h2>Empower Your Business with Seamless IT Innovation</h2>
+<p>Based in Orlando, Florida, we specialize in managed networks, cloud solutions, and cybersecurity for small to mid-tier businesses. No internal IT team? No problem—scale 10x faster and boost profitability effortlessly.</p>
+<button onclick="scrollToSection('contact')" class="cta-button">Get Started Today</button>
+</div>
+<div class="hero-image">
+<i class="fas fa-cloud"></i>
+</div>
+</section>
+
+<section id="about" class="about">
+<div class="container">
+<h2>About Bowden Core Networks</h2>
+<div class="about-grid">
+<div class="about-text">
+<p>Founded by Antonio Bowden, Bowden Core Networks is revolutionizing the network industry in Orlando, Florida. We focus on delivering tailored MSP IT solutions that eliminate IT headaches for businesses without dedicated teams.</p>
+<p>Our mission: Innovate for healthcare, real estate, tailoring, and financial services—making your operations secure, scalable, and profitable 10x faster.</p>
+<div class="owner-highlight">
+<img src="https://via.placeholder.com/200x200?text=Antonio+Bowden" alt="Antonio Bowden, Owner">
+<h3>Antonio Bowden, Founder & Owner</h3>
+<p>"We're here to build the core of your success."</p>
+</div>
+</div>
+<div class="about-stats">
+<div class="stat">
+<h3>10x</h3>
+<p>Faster Profitability</p>
+</div>
+<div class="stat">
+<h3>Orlando, FL</h3>
+<p>Local Expertise</p>
+</div>
+<div class="stat">
+<h3>24/7</h3>
+<p>Support</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="services" class="services">
+<div class="container">
+<h2>Our Core Services</h2>
+<div class="services-grid">
+<div class="service-card">
+<i class="fas fa-sitemap"></i>
+<h3>Network Management</h3>
+<p>Robust, reliable networks designed for seamless connectivity and performance.</p>
+</div>
+<div class="service-card">
+<i class="fas fa-cloud"></i>
+<h3>Cloud Solutions</h3>
+<p>Scalable cloud infrastructure to store, access, and collaborate from anywhere.</p>
+</div>
+<div class="service-card">
+<i class="fas fa-shield-alt"></i>
+<h3>Cybersecurity</h3>
+<p>Proactive security measures to protect your data and operations from threats.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="industries" class="industries">
+<div class="container">
+<h2>Industries We Serve</h2>
+<div class="industries-grid">
+<div class="industry-card">
+<i class="fas fa-heartbeat"></i>
+<h3>Healthcare</h3>
+<p>Secure patient data management and compliant networks for clinics and providers.</p>
+</div>
+<div class="industry-card">
+<i class="fas fa-building"></i>
+<h3>Real Estate</h3>
+<p>Efficient cloud tools for listings, transactions, and remote team collaboration.</p>
+</div>
+<div class="industry-card">
+<i class="fas fa-cut"></i>
+<h3>Tailoring & Apparel</h3>
+<p>Streamlined inventory and e-commerce security for growing fashion businesses.</p>
+</div>
+<div class="industry-card">
+<i class="fas fa-chart-line"></i>
+<h3>Financial Services</h3>
+<p>Fortified systems for compliance, transactions, and financial data protection.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="contact" class="contact">
+<div class="container">
+<h2>Contact Us</h2>
+<p>Ready to innovate your IT? Let's connect and discuss how we can accelerate your growth.</p>
+<form id="contactForm">
+<input type="text" placeholder="Your Name" required>
+<input type="email" placeholder="Your Email" required>
+<input type="text" placeholder="Your Company" required>
+<textarea placeholder="Tell us about your needs" rows="5" required></textarea>
+<button type="submit">Send Message</button>
+</form>
+<div class="contact-info">
+<p><i class="fas fa-map-marker-alt"></i> Orlando, Florida</p>
+<p><i class="fas fa-phone"></i> (407) 555-0123</p>
+<p><i class="fas fa-envelope"></i> info@bowdencorenetworks.com</p>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="container">
+<p>&copy; 2025 Bowden Core Networks. All rights reserved. | Orlando, FL</p>
+</div>
+</footer>
+
+<script>
+function scrollToSection(id) {
+document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+// Mobile menu toggle
+const hamburger = document.querySelector('.hamburger');
+const navMenu = document.querySelector('.nav-menu');
+
+hamburger.addEventListener('click', () => {
+hamburger.classList.toggle('active');
+navMenu.classList.toggle('active');
+});
+
+// Close menu on link click
+document.querySelectorAll('.nav-menu a').forEach(n => n.addEventListener('click', () => {
+hamburger.classList.remove('active');
+navMenu.classList.remove('active');
+}));
+
+// Form submission
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+e.preventDefault();
+alert('Thank you for your message! We\'ll get back to you soon. (Demo only)');
+this.reset();
+});
+</script>
+</body>
+</html>
