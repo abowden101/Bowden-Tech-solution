@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antonio Bowden | Network & Security Engineer</title>
+    <meta name="description" content="Antonio Bowden - Network & Security Engineer building the future through Bowden Tech Solutions. Expertise in enterprise infrastructure, cybersecurity, and emerging technologies.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark theme colors inspired by xAI/Neurolink */
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0a;
+            --bg-tertiary: #111111;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            --accent-primary: #00d9ff;
+            --accent-secondary: #0099ff;
+            --accent-glow: rgba(0, 217, 255, 0.3);
+            --border-color: #222222;
+            --card-bg: rgba(17, 17, 17, 0.8);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            overflow-x: hidden;
+        }
+
+        /* Animated background grid */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 217, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 217, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+            animation: gridPulse 20s ease-in-out infinite;
+        }
+
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Header/Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(0, 0, 0, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 217, 255, 0.1);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.25rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            filter: brightness(1.2);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            margin-top: 80px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.08) 0%, transparent 70%);
+            animation: heroGlow 15s ease-in-out infinite;
+        }
+
+        @keyframes heroGlow {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-50px, 50px) scale(1.1); }
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 900px;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 400;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .hero .description {
+            font-size: 1.125rem;
+            color: var(--text-tertiary);
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.8s both;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--bg-primary);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
+        }
+
+        /* Section Styles */
+        section {
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 8rem 3rem;
+            z-index: 1;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            font-size: 1.05rem;
+        }
+
+        .vision-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+        }
+
+        .vision-box:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 40px rgba(0, 217, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .vision-box h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-primary);
+            font-weight: 700;
+        }
+
+        .vision-box ul {
+            list-style: none;
+        }
+
+        .vision-box li {
+            padding: 0.75rem 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+        }
+
+        .vision-box li::before {
+            content: "→";
+            color: var(--accent-primary);
+            font-weight: bold;
+            margin-right: 1rem;
+            font-size: 1.25rem;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .skill-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .skill-card:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 40px rgba(0, 217, 255, 0.15);
+            transform: translateY(-8px);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .skill-card ul {
+            list-style: none;
+        }
+
+        .skill-card li {
+            padding: 0.6rem 0;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-card li:hover {
+            color: var(--text-primary);
+            padding-left: 0.5rem;
+        }
+
+        /* Certifications Section */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .cert-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cert-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: linear-gradient(180deg, transparent, rgba(0, 217, 255, 0.1));
+            transition: height 0.4s ease;
+        }
+
+        .cert-card:hover::after {
+            height: 100%;
+        }
+
+        .cert-card:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 40px rgba(0, 217, 255, 0.2);
+            transform: translateY(-8px);
+        }
+
+        .cert-badge {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--bg-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.5rem;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cert-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cert-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cert-status {
+            display: inline-block;
+            padding: 0.5rem 1.25rem;
+            background: rgba(0, 217, 255, 0.2);
+            color: var(--accent-primary);
+            border-radius: 25px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            border: 1px solid var(--accent-primary);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cert-status.completed {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border-color: #10b981;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 15px 50px rgba(0, 217, 255, 0.2);
+            transform: translateY(-10px);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(0, 153, 255, 0.1));
+            padding: 2.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .project-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .tag {
+            background: rgba(0, 217, 255, 0.15);
+            color: var(--accent-primary);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(0, 217, 255, 0.3);
+        }
+
+        .project-body {
+            padding: 2.5rem;
+        }
+
+        .project-body p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .project-body ul {
+            margin-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .project-body li {
+            margin-bottom: 0.75rem;
+            line-height: 1.7;
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 3rem;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.05) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-card:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 40px rgba(0, 217, 255, 0.15);
+            transform: translateY(-8px);
+        }
+
+        .service-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .contact-content {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact-content > p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .contact-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 5px 30px rgba(0, 217, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .contact-item span {
+            font-size: 2rem;
+        }
+
+        .contact-item a {
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-tertiary);
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-toggle:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            section {
+                padding: 6rem 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero {
+                min-height: 90vh;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.25rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .projects-grid,
+            .skills-grid,
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .hero .description {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <header id="header">
+        <nav>
+            <div class="logo">ANTONIO BOWDEN</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">☰</button>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">Network & Security Engineer</div>
+            <h1>
+                Building Tomorrow's <br>
+                <span class="gradient-text">Infrastructure Today</span>
+            </h1>
+            <p class="subtitle">Securing Networks | Advancing Technology | Shaping the Future</p>
+            <p class="description">
+                From enterprise cybersecurity to emerging neurotech ventures—Antonio Bowden combines deep technical expertise with visionary ambition. Currently leading Bowden Tech Solutions while building toward next-generation technology innovation.
+            </p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">Connect With Me</a>
+                <a href="#projects" class="btn btn-secondary">Explore My Work</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="fade-in">
+        <div class="section-header">
+            <div class="section-label">About</div>
+            <h2>Engineering the Future</h2>
+            <p>Where enterprise infrastructure meets innovative vision</p>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>The Journey</h3>
+                <p>
+                    I'm Antonio Bowden, a network and security engineer with deep expertise in enterprise infrastructure, cybersecurity, and cloud solutions. My technical foundation spans network architecture, security implementation, and automation—delivering measurable results for organizations that demand excellence.
+                </p>
+                <p>
+                    Currently advancing through CCNA and Security+ certifications while pursuing my degree through WGU, I'm actively building toward opportunities with defense contractors and Fortune 500 companies where I can leverage my security clearance eligibility to protect critical infrastructure.
+                </p>
+                <p>
+                    But my vision extends beyond traditional IT. Through Bowden Tech Solutions, I'm not just solving today's problems—I'm laying the groundwork for tomorrow's breakthroughs. My long-term trajectory points toward emerging technologies, particularly in the neurotech space, where the intersection of computing, biology, and human potential promises to redefine what's possible.
+                </p>
+            </div>
+            <div class="vision-box">
+                <h4>Current Focus & Future Vision</h4>
+                <ul>
+                    <li>Enterprise security & automation</li>
+                    <li>Cloud infrastructure (Azure/AD)</li>
+                    <li>Defense contractor trajectory</li>
+                    <li>Advanced certifications (CCNA, Sec+)</li>
+                    <li>MSP service excellence</li>
+                    <li>Emerging tech exploration</li>
+                    <li>Neurotech innovation path</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="fade-in">
+        <div class="section-header">
+            <div class="section-label">Technical Arsenal</div>
+            <h2>Core Competencies</h2>
+            <p>Comprehensive expertise across modern infrastructure and security</p>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-icon">🔒</div>
+                <h3>Network Security</h3>
+                <ul>
+                    <li>Firewall Configuration & Management</li>
+                    <li>IDS/IPS Implementation</li>
+                    <li>VPN Solutions</li>
+                    <li>Network Segmentation</li>
+                    <li>Security Monitoring</li>
+                    <li>Threat Analysis & Response</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">🌐</div>
+                <h3>Networking</h3>
+                <ul>
+                    <li>Routing & Switching (Cisco)</li>
+                    <li>TCP/IP & Network Protocols</li>
+                    <li>Network Design & Architecture</li>
+                    <li>VLAN Configuration</li>
+                    <li>Load Balancing</li>
+                    <li>Advanced Troubleshooting</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">☁️</div>
+                <h3>Cloud & Infrastructure</h3>
+                <ul>
+                    <li>Microsoft Azure</li>
+                    <li>Active Directory</li>
+                    <li>Azure AD / Entra ID</li>
+                    <li>Virtualization (VMware, Hyper-V)</li>
+                    <li>Infrastructure as Code</li>
+                    <li>Cloud Security</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">⚙️</div>
+                <h3>Automation & Tools</h3>
+                <ul>
+                    <li>PowerShell Scripting</li>
+                    <li>Python Automation</li>
+                    <li>Configuration Management</li>
+                    <li>Security Orchestration</li>
+                    <li>Monitoring & Alerting</li>
+                    <li>Documentation Systems</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="certifications" class="fade-in">
+        <div class="section-header">
+            <div class="section-label">Credentials</div>
+            <h2>Certifications & Education</h2>
+            <p>Continuously advancing technical excellence</p>
+        </div>
+        <div class="cert-grid">
+            <div class="cert-card">
+                <div class="cert-badge">🌐</div>
+                <h3>CCNA</h3>
+                <p>Cisco Certified Network Associate</p>
+                <span class="cert-status">In Progress</span>
+            </div>
+            <div class="cert-card">
+                <div class="cert-badge">🔐</div>
+                <h3>Security+</h3>
+                <p>CompTIA Security+ Certification</p>
+                <span class="cert-status">In Progress</span>
+            </div>
+            <div class="cert-card">
+                <div class="cert-badge">🎓</div>
+                <h3>WGU Degree</h3>
+                <p>IT/Cybersecurity Track</p>
+                <span class="cert-status">Pursuing</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="fade-in">
+        <div class="section-header">
+            <div class="section-label">Portfolio</div>
+            <h2>Featured Projects</h2>
+            <p>Real-world solutions demonstrating technical mastery</p>
+        </div>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Enterprise Network Security Implementation</h3>
+                    <div class="project-tags">
+                        <span class="tag">Firewalls</span>
+                        <span class="tag">Security</span>
+                        <span class="tag">Compliance</span>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <p>Designed and implemented comprehensive network security architecture for enterprise environment.</p>
+                    <ul>
+                        <li>Configured next-gen firewalls with advanced threat protection</li>
+                        <li>Implemented network segmentation and access controls</li>
+                        <li>Reduced security incidents through proactive monitoring</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Azure Cloud Migration & Management</h3>
+                    <div class="project-tags">
+                        <span class="tag">Azure</span>
+                        <span class="tag">Cloud</span>
+                        <span class="tag">Active Directory</span>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <p>Led cloud infrastructure migration and ongoing management in Azure environment.</p>
+                    <ul>
+                        <li>Migrated on-premises resources to Azure infrastructure</li>
+                        <li>Configured Azure AD and hybrid identity solutions</li>
+                        <li>Implemented security policies and compliance controls</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Security Automation Framework</h3>
+                    <div class="project-tags">
+                        <span class="tag">PowerShell</span>
+                        <span class="tag">Automation</span>
+                        <span class="tag">Security</span>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <p>Developed automated security monitoring and response system using PowerShell.</p>
+                    <ul>
+                        <li>Created automated security scanning and compliance tools</li>
+                        <li>Built real-time reporting dashboards for security metrics</li>
+                        <li>Reduced manual security tasks by 60% through automation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="fade-in">
+        <div class="section-header">
+            <div class="section-label">Bowden Tech Solutions</div>
+            <h2>Professional Services</h2>
+            <p>Expert IT solutions for businesses ready to scale</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🔐</div>
+                <h3>Network Security</h3>
+                <p>Comprehensive security solutions including firewall management, intrusion detection, security audits, and compliance implementation.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🌐</div>
+                <h3>Network Infrastructure</h3>
+                <p>Design, implementation, and management of enterprise-grade network infrastructure with focus on reliability and performance.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">☁️</div>
+                <h3>Cloud Solutions</h3>
+                <p>Azure cloud migration, management, and optimization. Active Directory integration and hybrid infrastructure setup.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🛠️</div>
+                <h3>Managed IT Services</h3>
+                <p>Proactive monitoring, maintenance, and support for your IT infrastructure. Minimize downtime and maximize efficiency.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">⚡</div>
+                <h3>Automation & Optimization</h3>
+                <p>Streamline operations with custom automation solutions. Reduce manual tasks and improve operational efficiency.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📊</div>
+                <h3>IT Consulting</h3>
+                <p>Strategic IT planning and consulting to align technology with business goals. Architecture review and optimization.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section fade-in">
+        <div class="section-header">
+            <div class="section-label">Get In Touch</div>
+            <h2>Let's Connect</h2>
+            <p>Ready to discuss your next project or opportunity</p>
+        </div>
+        <div class="contact-content">
+            <p>
+                Whether you're a recruiter seeking top-tier talent, a business needing enterprise IT solutions, or a potential collaborator exploring emerging technologies—let's start a conversation.
+            </p>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <span>📧</span>
+                    <a href="mailto:contact@bowdentechsolutions.com">contact@bowdentechsolutions.com</a>
+                </div>
+                <div class="contact-item">
+                    <span>📍</span>
+                    <span>Orlando, Florida</span>
+                </div>
+                <div class="contact-item">
+                    <span>💼</span>
+                    <a href="https://www.linkedin.com/in/antonio-bowden" target="_blank">LinkedIn Profile</a>
+                </div>
+            </div>
+            <div style="margin-top: 3rem;">
+                <a href="mailto:contact@bowdentechsolutions.com" class="btn btn-primary">Send Message</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Antonio Bowden | Bowden Tech Solutions</p>
+        <p style="margin-top: 0.5rem;">Building Infrastructure. Advancing Technology. Shaping Tomorrow.</p>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
