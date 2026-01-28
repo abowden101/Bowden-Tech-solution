@@ -1,17 +1,75 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <script>
-    // Smooth fade-in for your service cards
-    gsap.from(".service-card", {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power4.out",
-        scrollTrigger: {
-            trigger: ".services-section",
-            start: "top 80%"
-        }
+    // --- THREE.JS SCENE SETUP ---
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ 
+        canvas: document.getElementById('grid-bg'), // Reuse your canvas
+        alpha: true, 
+        antialias: true 
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // Create the "Network Node"
+    const geometry = new THREE.IcosahedronGeometry(2, 1); // 2 is size, 1 is detail
+    const material = new THREE.MeshBasicMaterial({
+        color: 0x0066ff,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.3
+    });
+    const sphere = new THREE.Mesh(geometry, material);
+    scene.add(sphere);
+
+    // Add glowing dots at the vertices
+    const pointsMaterial = new THREE.PointsMaterial({
+        color: 0xffffff,
+        size: 0.05
+    });
+    const points = new THREE.Points(geometry, pointsMaterial);
+    scene.add(points);
+
+    camera.position.z = 5;
+
+    // --- ANIMATION LOOP ---
+    function animate() {
+        requestAnimationFrame(animate);
+        
+        // Slow constant rotation
+        sphere.rotation.y += 0.002;
+        sphere.rotation.x += 0.001;
+        points.rotation.y += 0.002;
+        points.rotation.x += 0.001;
+
+        renderer.render(scene, camera);
+    }
+
+    // Mouse Interaction: Tilt the object
+    document.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth) - 0.5;
+        const y = (e.clientY / window.innerHeight) - 0.5;
+        
+        gsap.to(sphere.rotation, {
+            y: x * 2,
+            x: y * 2,
+            duration: 2,
+            ease: "power2.out"
+        });
+        gsap.to(points.rotation, {
+            y: x * 2,
+            x: y * 2,
+            duration: 2,
+            ease: "power2.out"
+        });
+    });
+
+    animate();
+
+    // Handle Resize
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
     });
 </script>
