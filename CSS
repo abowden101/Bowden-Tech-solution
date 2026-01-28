@@ -1,15 +1,4 @@
-body {
-    background: radial-gradient(circle at 50% 50%, #111 0%, #000 100%);
-    overflow-x: hidden;
-}
-
-/* Add a glowing "blob" in the background */
-.glow {
-    position: fixed;
-    width: 40vw;
-    height: 40vw;
-    background: radial-gradient(circle, rgba(0, 102, 255, 0.15) 0%, transparent 70%);
-    top: -10%;
-    right: -10%;
-    z-index: -1;
+canvas#grid-bg {
+    pointer-events: none; /* Allows user to click buttons through the animation */
+    filter: blur(0.5px);   /* Softens the 3D lines for a more "cinematic" feel */
 }
