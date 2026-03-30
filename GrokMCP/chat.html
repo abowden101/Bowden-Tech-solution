@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bowden Tech Grok MCP - Orlando MSP Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0a;
+            --bg-tertiary: #111111;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent-primary: #00d9ff;
+            --accent-secondary: #0099ff;
+            --accent-glow: rgba(0, 217, 255, 0.3);
+            --border-color: #222222;
+        }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+            background-image: linear-gradient(rgba(0,217,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,217,255,.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+        }
+        .header {
+            text-align: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .header p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+        .message {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 12px;
+            max-width: 85%;
+            line-height: 1.6;
+        }
+        .user {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: #000;
+            align-self: flex-end;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+        .assistant {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-bottom-left-radius: 4px;
+        }
+        .input-area {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+        }
+        input {
+            flex: 1;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--accent-primary);
+            color: var(--text-primary);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--accent-glow);
+        }
+        button {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+        .typing {
+            color: var(--text-secondary);
+            font-style: italic;
+            padding: 0.5rem 1rem;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 0.5rem; }
+            .header h1 { font-size: 1.5rem; }
+            .message { max-width: 95%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Bowden Tech Local Grok MCP</h1>
+            <p>Orlando MSP Edition • Private AI Assistant for Central Florida Businesses</p>
+        </div>
+        <div class="messages" id="messages">
+            <div class="message assistant">
+                Welcome to Bowden Tech's private AI assistant! I'm here to help with managed IT services, cybersecurity, cloud solutions, and more. What can I assist you with today?
+            </div>
+        </div>
+        <div class="input-area">
+            <input type="text" id="prompt" placeholder="Ask anything MSP-related... (e.g., 'What's your pricing for a dental office in Winter Park?')">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const input = document.getElementById('prompt');
+            const promptText = input.value.trim();
+            if (!promptText) return;
+
+            addMessage(promptText, 'user');
+            input.value = '';
+
+            // Show typing indicator
+            const typingDiv = addTypingIndicator();
+
+            try {
+                const res = await fetch('/mcp/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: promptText })
+                });
+                const data = await res.json();
+
+                // Remove typing indicator
+                typingDiv.remove();
+
+                if (data.status === 'success') {
+                    addMessage(data.response, 'assistant');
+                } else {
+                    addMessage(`Error: ${data.response}`, 'assistant');
+                }
+            } catch (e) {
+                typingDiv.remove();
+                addMessage("Error connecting to local Grok MCP. Make sure the server is running on localhost:8000.", 'assistant');
+            }
+        }
+
+        function addMessage(text, type) {
+            const div = document.createElement('div');
+            div.className = `message ${type}`;
+            div.innerHTML = text.replace(/\n/g, '<br>');
+            document.getElementById('messages').appendChild(div);
+            div.scrollIntoView({ behavior: "smooth" });
+            return div;
+        }
+
+        function addTypingIndicator() {
+            const div = document.createElement('div');
+            div.className = 'typing';
+            div.textContent = 'GrokMCP is thinking...';
+            document.getElementById('messages').appendChild(div);
+            div.scrollIntoView({ behavior: "smooth" });
+            return div;
+        }
+
+        document.getElementById('prompt').addEventListener('keypress', e => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>
