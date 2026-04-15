@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bowden Tech Grok Widget</title>
+    <style>
+        :root {
+            --accent: #00d9ff;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: transparent;
+        }
+        .grok-widget {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 380px;
+            height: 520px;
+            background: #0a0a0a;
+            border: 2px solid var(--accent);
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 217, 255, 0.25);
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            z-index: 9999;
+        }
+        .widget-header {
+            background: #000;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #222;
+        }
+        .widget-logo {
+            font-size: 1.35rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), #0099ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .widget-status {
+            font-size: 0.8rem;
+            color: var(--accent);
+            background: rgba(0,217,255,0.1);
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+        .widget-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #050505;
+        }
+        .widget-message {
+            margin-bottom: 16px;
+            padding: 13px 18px;
+            border-radius: 12px;
+            max-width: 85%;
+            line-height: 1.5;
+        }
+        .widget-user {
+            background: var(--accent);
+            color: #000;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        .widget-assistant {
+            background: #111;
+            border: 1px solid #222;
+        }
+        .widget-input {
+            padding: 16px 20px;
+            background: #000;
+            border-top: 1px solid #222;
+            display: flex;
+            gap: 10px;
+        }
+        .widget-input input {
+            flex: 1;
+            padding: 14px 18px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 12px;
+            color: white;
+        }
+        .widget-input button {
+            padding: 0 24px;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .chat-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 62px;
+            height: 62px;
+            background: linear-gradient(135deg, var(--accent), #0099ff);
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0, 217, 255, 0.4);
+            z-index: 10000;
+            transition: all 0.3s;
+        }
+        .chat-button:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Button -->
+    <button class="chat-button" onclick="toggleWidget()">💬</button>
+
+    <!-- Chat Widget -->
+    <div class="grok-widget" id="widget">
+        <div class="widget-header">
+            <div class="widget-logo">BOWDEN TECH</div>
+            <div class="widget-status">Local Grok • Orlando MSP</div>
+        </div>
+        <div class="widget-messages" id="widget-messages">
+            <div style="text-align:center; color:#00d9ff; margin:40px 0 20px;">
+                Hi, I'm your private Grok MCP.<br>
+                How can I help with your IT or cybersecurity needs today?
+            </div>
+        </div>
+        <div class="widget-input">
+            <input type="text" id="widget-prompt" placeholder="Ask anything MSP-related...">
+            <button onclick="sendWidgetMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleWidget() {
+            const widget = document.getElementById('widget');
+            widget.style.display = widget.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        async function sendWidgetMessage() {
+            const input = document.getElementById('widget-prompt');
+            const promptText = input.value.trim();
+            if (!promptText) return;
+
+            addWidgetMessage(promptText, 'widget-user');
+            input.value = '';
+
+            const loading = addWidgetMessage("Thinking...", 'widget-assistant');
+
+            try {
+                const res = await fetch('http://127.0.0.1:8000/mcp/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: promptText })
+                });
+                const data = await res.json();
+                loading.remove();
+
+                if (data.status === "success") {
+                    addWidgetMessage(data.response, 'widget-assistant');
+                } else {
+                    addWidgetMessage("Error: " + (data.response || "Unknown error"), 'widget-assistant');
+                }
+            } catch (e) {
+                loading.remove();
+                addWidgetMessage("Cannot connect to Local Grok MCP. Make sure the server is running.", 'widget-assistant');
+            }
+        }
+
+        function addWidgetMessage(text, type) {
+            const container = document.getElementById('widget-messages');
+            const div = document.createElement('div');
+            div.className = `widget-message ${type}`;
+            div.textContent = text;
+            container.appendChild(div);
+            div.scrollIntoView({ behavior: "smooth" });
+            return div;
+        }
+
+        // Enter key support
+        document.getElementById('widget-prompt').addEventListener('keypress', e => {
+            if (e.key === 'Enter') sendWidgetMessage();
+        });
+    </script>
+</body>
+</html>
