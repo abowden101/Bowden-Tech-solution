@@ -1,0 +1,6 @@
+C:\BowdenTech\GrokMCP\
+├── mcp_server.py                  ← Yes (core)
+├── chat.html                      ← Yes (user-friendly interface)
+├── start_all.bat                  ← Yes (very useful for you + future team)
+├── README.md                      ← YES (important!)
+└── .gitignore                     ← Yes
