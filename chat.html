@@ -3,82 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bowden Tech Grok MCP • Orlando MSP</title>
+    <title>Bowden Tech Grok • Orlando MSP</title>
     <style>
         :root {
             --accent: #00d9ff;
-            --bg: #0a0a0a;
-            --card: #111111;
+            --bg: #000000;
+            --panel: #0f0f0f;
         }
         * { margin:0; padding:0; box-sizing:border-box; }
         body {
             font-family: 'Inter', system-ui, sans-serif;
-            background: #000;
+            background: var(--bg);
             color: #fff;
             height: 100vh;
             overflow: hidden;
         }
-        .widget {
-            width: 100%;
+        .chat-container {
             height: 100vh;
             display: flex;
             flex-direction: column;
             background: var(--bg);
         }
         .header {
-            background: #000;
-            padding: 1.2rem 2rem;
+            background: #0a0a0a;
+            padding: 18px 24px;
             border-bottom: 1px solid #222;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
+            flex-shrink: 0;
         }
         .logo {
-            font-size: 1.4rem;
+            font-size: 1.55rem;
             font-weight: 800;
             background: linear-gradient(135deg, var(--accent), #0099ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .status {
+        .tag {
             font-size: 0.85rem;
-            color: #00d9ff;
-            background: rgba(0,217,255,0.1);
+            color: var(--accent);
+            background: rgba(0,217,255,0.12);
             padding: 4px 12px;
             border-radius: 20px;
             border: 1px solid rgba(0,217,255,0.3);
         }
         .messages {
             flex: 1;
-            padding: 20px;
+            padding: 24px;
             overflow-y: auto;
             background: #050505;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
         .message {
-            margin-bottom: 18px;
-            max-width: 85%;
-            padding: 14px 18px;
-            border-radius: 12px;
-            line-height: 1.5;
+            max-width: 80%;
+            padding: 14px 20px;
+            border-radius: 14px;
+            line-height: 1.55;
         }
         .user {
             background: var(--accent);
             color: #000;
             align-self: flex-end;
-            margin-left: auto;
             border-bottom-right-radius: 4px;
         }
         .assistant {
-            background: var(--card);
+            background: var(--panel);
             border: 1px solid #222;
             border-bottom-left-radius: 4px;
         }
         .input-area {
-            padding: 16px 20px;
-            background: #000;
+            padding: 20px 24px;
+            background: #0a0a0a;
             border-top: 1px solid #222;
             display: flex;
             gap: 12px;
+            flex-shrink: 0;
         }
         input {
             flex: 1;
@@ -90,38 +92,43 @@
             font-size: 1.05rem;
         }
         button {
-            padding: 0 28px;
+            padding: 0 32px;
             background: var(--accent);
             color: #000;
             border: none;
             border-radius: 12px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
+            transition: all 0.2s;
+        }
+        button:hover {
+            background: #00ffff;
+            transform: translateY(-1px);
         }
         .welcome {
             text-align: center;
-            color: var(--accent);
-            margin: 40px 0 20px;
+            color: #888;
+            margin: 60px 0 30px;
             font-size: 1.1rem;
         }
     </style>
 </head>
 <body>
-    <div class="widget">
+    <div class="chat-container">
         <div class="header">
             <div class="logo">BOWDEN TECH</div>
-            <div class="status">Local Grok MCP • Orlando MSP</div>
+            <div class="tag">Local Grok MCP • Orlando MSP</div>
         </div>
 
         <div class="messages" id="messages">
             <div class="welcome">
                 Welcome to Bowden Tech's Private AI Assistant<br>
-                How can I help with your managed IT or cybersecurity needs today?
+                Ask me anything about managed IT, cybersecurity, pricing, or Central Florida business tech needs.
             </div>
         </div>
 
         <div class="input-area">
-            <input type="text" id="prompt" placeholder="Ask anything MSP-related... (e.g. pricing for a Winter Park dental office)">
+            <input type="text" id="prompt" placeholder="Ask anything MSP-related... (e.g. 'What's your pricing for a dental office in Winter Park?')">
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
@@ -135,6 +142,8 @@
             addMessage(promptText, 'user');
             input.value = '';
 
+            const loadingDiv = addMessage("Thinking...", 'assistant');
+            
             try {
                 const res = await fetch('http://127.0.0.1:8000/mcp/query', {
                     method: 'POST',
@@ -143,26 +152,31 @@
                 });
 
                 const data = await res.json();
+                loadingDiv.remove();
+
                 if (data.status === "success") {
                     addMessage(data.response, 'assistant');
                 } else {
-                    addMessage("Error: " + (data.response || "Unknown error"), 'assistant');
+                    addMessage("Error: " + (data.response || "Unknown error from MCP"), 'assistant');
                 }
             } catch (e) {
+                loadingDiv.remove();
                 addMessage("Cannot connect to Local Grok MCP. Make sure mcp_server.py is running.", 'assistant');
             }
         }
 
         function addMessage(text, type) {
+            const messages = document.getElementById('messages');
             const div = document.createElement('div');
             div.className = `message ${type}`;
             div.textContent = text;
-            document.getElementById('messages').appendChild(div);
+            messages.appendChild(div);
             div.scrollIntoView({ behavior: "smooth" });
+            return div;
         }
 
-        // Allow pressing Enter to send
-        document.getElementById('prompt').addEventListener('keypress', function(e) {
+        // Enter key support
+        document.getElementById('prompt').addEventListener('keypress', e => {
             if (e.key === 'Enter') sendMessage();
         });
     </script>
