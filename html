@@ -1,44 +1,130 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bowden Tech Solutions | Orlando MSP - Managed IT Services</title>
+    <meta name="description" content="Orlando's trusted local MSP. Affordable managed IT, cybersecurity, cloud solutions, and same-day support for Central Florida small businesses. Flat-rate pricing. No long contracts.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #000000;
+            --card: #111111;
+            --accent: #00d9ff;
+            --text: #ffffff;
+            --secondary: #a0a0a0;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Inter', sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+        .bg-grid { position:fixed; top:0; left:0; width:100%; height:100%; background-image: linear-gradient(rgba(0,217,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,217,255,0.03) 1px, transparent 1px); background-size:50px 50px; z-index:-1; }
 
-<script>
-    // --- THREE.JS SCENE SETUP ---
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ 
-        canvas: document.getElementById('grid-bg'), // Reuse your canvas
-        alpha: true, 
-        antialias: true 
-    });
-    renderer.setSize(window.innerWidth, window.innerHeight);
+        header { position:fixed; top:0; width:100%; background:rgba(0,0,0,0.95); backdrop-filter:blur(20px); z-index:1000; border-bottom:1px solid #222; }
+        nav { max-width:1400px; margin:0 auto; padding:1.25rem 2rem; display:flex; justify-content:space-between; align-items:center; }
+        .logo { font-size:1.65rem; font-weight:800; background:linear-gradient(135deg, var(--accent), #0099ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .nav-links { display:flex; gap:2.8rem; list-style:none; }
+        .nav-links a { color:var(--secondary); text-decoration:none; font-weight:500; }
+        .nav-links a:hover { color:var(--accent); }
 
-    // Create the "Network Node"
-    const geometry = new THREE.IcosahedronGeometry(2, 1); // 2 is size, 1 is detail
-    const material = new THREE.MeshBasicMaterial({
-        color: 0x0066ff,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.3
-    });
-    const sphere = new THREE.Mesh(geometry, material);
-    scene.add(sphere);
+        .hero { min-height:100vh; display:flex; align-items:center; justify-content:center; text-align:center; padding:0 1.5rem; }
+        .hero h1 { font-size:3.9rem; font-weight:900; line-height:1.05; margin-bottom:1.2rem; }
+        .hero .subtitle { font-size:1.45rem; color:var(--secondary); margin-bottom:2.5rem; }
+        .cta-buttons { display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap; }
+        .btn { padding:1.15rem 3rem; border-radius:8px; font-weight:600; text-decoration:none; transition:all .3s; }
+        .btn-primary { background:linear-gradient(135deg, var(--accent), #0099ff); color:#000; }
+        .btn-secondary { border:2px solid #333; color:var(--text); }
 
-    // Add glowing dots at the vertices
-    const pointsMaterial = new THREE.PointsMaterial({
-        color: 0xffffff,
-        size: 0.05
-    });
-    const points = new THREE.Points(geometry, pointsMaterial);
-    scene.add(points);
+        section { padding:7rem 2rem; max-width:1400px; margin:0 auto; }
+        .section-header { text-align:center; margin-bottom:4.5rem; }
+        .section-label { color:var(--accent); font-weight:700; letter-spacing:3px; text-transform:uppercase; font-size:0.9rem; }
+        .section-header h2 { font-size:2.9rem; font-weight:800; }
 
-    camera.position.z = 5;
+        .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:2rem; }
+        .card { background:var(--card); border:1px solid #222; padding:2.8rem; border-radius:16px; transition:all .4s; }
+        .card:hover { border-color:var(--accent); transform:translateY(-6px); }
 
-    // --- ANIMATION LOOP ---
-    function animate() {
-        requestAnimationFrame(animate);
-        
-        // Slow constant rotation
-        sphere.rotation.y += 0.002;
-        sphere.rotation.x += 0.001;
+        footer { background:#0a0a0a; padding:4rem 2rem; text-align:center; color:var(--secondary); border-top:1px solid #222; }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <header>
+        <nav>
+            <div class="logo">BOWDEN TECH</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#why">Why Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div>
+            <div style="color:var(--accent); font-weight:600; margin-bottom:1rem;">ORLANDO, FLORIDA • LOCAL MSP</div>
+            <h1>Local Managed IT.<br>Fast. Affordable.<br><span style="background:linear-gradient(135deg,#fff,#00d9ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Done Right.</span></h1>
+            <p class="subtitle">Flat-rate pricing • Same-day local response • No long contracts</p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">Get Your FREE IT Assessment →</a>
+                <a href="#services" class="btn btn-secondary">Our Services</a>
+            </div>
+            <p style="margin-top:3rem; color:var(--secondary);">Serving Orlando • Winter Park • Lake Nona • Kissimmee • Maitland • Altamonte Springs</p>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="section-header">
+            <div class="section-label">FOUNDER-LED MSP</div>
+            <h2>Orlando Built. Locally Trusted.</h2>
+        </div>
+        <div style="max-width:820px; margin:0 auto; text-align:center; font-size:1.15rem; color:var(--secondary);">
+            <p>I'm Antonio Bowden, Network & Security Engineer and founder of Bowden Tech Solutions.</p>
+            <p>We started this MSP in Orlando to give Central Florida businesses what they actually need: reliable IT support, strong cybersecurity, and honest pricing — without the corporate markup or slow response times.</p>
+        </div>
+    </section>
+
+    <section id="services" style="background:#0a0a0a;">
+        <div class="section-header">
+            <div class="section-label">SERVICES</div>
+            <h2>Managed IT That Works for You</h2>
+        </div>
+        <div class="grid">
+            <div class="card"><h3>Managed IT & Helpdesk</h3><p>24/7 monitoring, unlimited support, and proactive maintenance for one predictable monthly fee.</p></div>
+            <div class="card"><h3>Cybersecurity</h3><p>Endpoint protection, firewalls, phishing defense, and compliance guidance tailored for SMBs.</p></div>
+            <div class="card"><h3>Cloud Solutions</h3><p>Azure migration, Microsoft 365 setup, secure backups, and hybrid environments.</p></div>
+            <div class="card"><h3>Network Infrastructure</h3><p>Wi-Fi optimization, VPNs, structured cabling, and reliable network design for Orlando offices.</p></div>
+        </div>
+    </section>
+
+    <section id="why">
+        <div class="section-header">
+            <div class="section-label">WHY CHOOSE US</div>
+            <h2>Local Advantage. Real Value.</h2>
+        </div>
+        <div class="grid">
+            <div class="card"><h3>Same-Day Local Response</h3><p>We're in Orlando. When something breaks, we show up fast.</p></div>
+            <div class="card"><h3>Flat-Rate Pricing</h3><p>Predictable monthly fees designed for growing small businesses.</p></div>
+            <div class="card"><h3>Personal Service</h3><p>You deal directly with me and a small dedicated team.</p></div>
+            <div class="card"><h3>Proactive Security</h3><p>We stop problems before they impact your business.</p></div>
+        </div>
+    </section>
+
+    <section id="contact" style="background:#0a0a0a; text-align:center;">
+        <div class="section-header">
+            <h2>Ready to Upgrade Your IT?</h2>
+            <p style="max-width:620px; margin:2rem auto; color:var(--secondary);">Book a no-pressure 30-minute IT assessment. We'll review your current setup and show you quick wins — completely free.</p>
+        </div>
+        <a href="mailto:contact@bowdentechsolutions.com" class="btn btn-primary" style="font-size:1.25rem; padding:1.4rem 4rem;">Get Your FREE IT Assessment</a>
+        <p style="margin-top:3rem; color:var(--secondary);">Orlando, Florida • contact@bowdentechsolutions.com</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Bowden Tech Solutions • Orlando, Florida</p>
+        <p>Local MSP • Managed IT Services • Cybersecurity for Central Florida Businesses</p>
+    </footer>
+</body>
+</html>
         points.rotation.y += 0.002;
         points.rotation.x += 0.001;
 
